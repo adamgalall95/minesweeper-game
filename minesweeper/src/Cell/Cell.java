@@ -1,37 +1,34 @@
 package Cell;
 
 public class Cell {
-    private boolean isMine;
-    private boolean isRevealed;
-    private int adjacentMines;
+    private boolean clicked = false;
+    private boolean bomb = false;
+    private int surroundingBombs = 0;
 
-    public Cell() {
-        this.isMine = false;
-        this.isRevealed = false;
-        this.adjacentMines = 0;
+    public boolean isClicked() {
+        return this.clicked;
     }
 
-    public boolean isMine() {
-        return isMine;
+    public boolean isBomb() {
+        return this.bomb;
     }
 
-    public boolean isRevealed() {
-        return isRevealed;
+    public int getSurroundingBomb() {
+        return this.surroundingBombs;
     }
 
-    public int adjacentMines() {
-        return adjacentMines;
-    }
-
-    public void reveal() {
-        isRevealed = true;
-    }
-
-    public void setadjacentMines(int count) {
-        if (count <= 8 && count >= 0) {
-            adjacentMines = count;
-        } else {
-            return;
+    public void setClicked() {
+        if (!isClicked()) {
+            this.clicked = true;
         }
     }
+
+    public void setBomb() {
+        this.bomb = true;
+    }
+
+    public void setSurroundingBomb(int num) {
+        this.surroundingBombs = num;
+    }
+
 }
