@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class Grid {
     private List<List<Cell>> cellGrid = new ArrayList<>();
-    private boolean gridInitiated = false;
     private Random random = new Random();
 
     private void fillGridWithCells() {
@@ -37,22 +36,104 @@ public class Grid {
         }
     }
 
+    public Boolean validRowCol(int rowCol) {
+        if (rowCol < 0 || rowCol >= 10) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void checkSurroundingBombs(int i, int j) {
+        int numberOfBombs = 0;
+        for (int row = i - 1; row <= i + 1; row++) {
+            if (!validRowCol(row)) {
+                continue;
+            } else {
+                for (int col = j - 1; col <= j + 1; col++) {
+                    if (!validRowCol(col)) {
+                        continue;
+                    }
+                    if (row == i && col == j) {
+                        continue;
+                    }
+                    if (cellGrid.get(row).get(col).isBomb()) {
+                        numberOfBombs++;
+                    }
+                }
+            }
+        }
+        cellGrid.get(i).get(j).setSurroundingBomb(numberOfBombs);
+    }
+
+    private void SetNumberOfSurroundingBombs() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                Cell cellObj = cellGrid.get(i).get(j);
+                if (cellObj.isBomb()) {
+                    continue;
+                }
+                checkSurroundingBombs(i, j);
+            }
+        }
+    }
+
     public void initGrid() {
         fillGridWithCells();
         fillGridWithBombs();
+        SetNumberOfSurroundingBombs();
+    }
+
+    public Cell getCell(int row, int col) {
+        if (!validRowCol(row) || !validRowCol(col)) {
+            return null;
+        }
+        return cellGrid.get(row).get(col);
     }
 
     public void printGrid() {
         for (int i = 0; i < 10; i++) {
-            List<Boolean> row = new ArrayList<>();
-            for (int j = 0; j < 10; j++) {
-                int rowIndex = random.nextInt(10);
-                int columnIndex = random.nextInt(10);
 
-                Cell cellObj = cellGrid.get(rowIndex).get(columnIndex);
-                row.add(cellObj.isBomb());
+            List<String> row = new ArrayList<>();
+
+            for (int j = 0; j < 10; j++) {
+
+                Cell cellObj = cellGrid.get(i).get(j);
+
+                if (!cellObj.isClicked()) {
+                    row.add("-");
+                } else if (cellObj.isBomb()) {
+                    row.add("B");
+                } else {
+                    row.add(String.valueOf(cellObj.getSurroundingBomb()));
+                }
+            }
+
+            System.out.println(row);
+        }
+    }
+
+    public void clickCell(int row, int col) {
+
+        Cell cellObj = cellGrid.get(row).get(col);
+
+        if (cellObj.isClicked()) {
+            System.out.println("This cell has already been clicked!");
+            return;
+        }
+
+        cellObj.setClicked();
+    }
+
+    public void printGridSurrBombs() {
+        for (int i = 0; i < 10; i++) {
+            List<Integer> row = new ArrayList<>();
+            for (int j = 0; j < 10; j++) {
+                Cell cellObj = cellGrid.get(i).get(j);
+                row.add(cellObj.getSurroundingBomb());
             }
             System.out.println(row);
         }
     }
+
 }
