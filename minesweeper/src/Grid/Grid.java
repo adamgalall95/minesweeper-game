@@ -8,6 +8,15 @@ import java.util.Random;
 public class Grid {
     private List<List<Cell>> cellGrid = new ArrayList<>();
     private Random random = new Random();
+    private int clickedCellsCount = 0;
+
+    // private void setClickedCellsCount(int count) {
+    // clickedCellsCount = count;
+    // }
+
+    public int getClickedCellsCount() {
+        return clickedCellsCount;
+    }
 
     private void fillGridWithCells() {
         for (int i = 0; i < 10; i++) {
@@ -66,7 +75,7 @@ public class Grid {
         cellGrid.get(i).get(j).setSurroundingBomb(numberOfBombs);
     }
 
-    private void SetNumberOfSurroundingBombs() {
+    private void setNumberOfSurroundingBombs() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 Cell cellObj = cellGrid.get(i).get(j);
@@ -81,7 +90,7 @@ public class Grid {
     public void initGrid() {
         fillGridWithCells();
         fillGridWithBombs();
-        SetNumberOfSurroundingBombs();
+        setNumberOfSurroundingBombs();
     }
 
     public Cell getCell(int row, int col) {
@@ -113,16 +122,23 @@ public class Grid {
         }
     }
 
-    public void clickCell(int row, int col) {
+    public boolean clickCell(int row, int col) {
 
         Cell cellObj = cellGrid.get(row).get(col);
 
         if (cellObj.isClicked()) {
             System.out.println("This cell has already been clicked!");
-            return;
+            return false;
         }
 
         cellObj.setClicked();
+
+        if (cellObj.isBomb()) {
+            return true;
+        }
+
+        clickedCellsCount++;
+        return false;
     }
 
     public void printGridSurrBombs() {

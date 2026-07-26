@@ -12,9 +12,10 @@ public class App {
         testGrid.initGrid();
 
         Scanner scanner = new Scanner(System.in);
-        boolean hitBomb = false;
+        int emptyCells = 90;
+        String gameOverText = null;
 
-        while (!hitBomb) {
+        while (true) {
             testGrid.printGrid();
 
             System.out.println("Enter row:");
@@ -28,13 +29,20 @@ public class App {
                 continue;
             }
 
-            testGrid.clickCell(row, col);
+            boolean hitBomb = testGrid.clickCell(row, col);
 
-            Cell clickedCell = testGrid.getCell(row, col);
+            if (hitBomb) {
+                gameOverText = "Lost Game";
+                break;
+            }
 
-            hitBomb = clickedCell.isBomb();
+            if (testGrid.getClickedCellsCount() == emptyCells) {
+                gameOverText = "Game Won";
+                break;
+            }
         }
         testGrid.printGrid();
+        System.out.println(gameOverText);
         scanner.close();
     }
 
