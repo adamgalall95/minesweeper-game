@@ -1,43 +1,33 @@
-# Project: Minesweeper
+# Minesweeper
 
-## MVP
+## Overview
 
-Recreate a simplified version of the game Minesweeper to be played in the java console
-The game should be able to randomly generate 10 mines in a 10x10 grid
-The user will be able to enter a command that represents a coordinate to check a location for a mine
-The application will display a number from 0-8 depending on how many mines surround that location
-If the user selects a mine, the game will respond "boom!" and the game will be lost
-If every non-mine square has been revealed, the game is won
-Render the grid to the console after every user command
+A simplified version of the classic Minesweeper game built in Java and played through the Terminal.
 
-## Bonuses (optional)
+The player selects coordinates on a 10x10 grid to reveal cells while avoiding randomly generated mines. Each revealed cell displays the number of surrounding mines.
 
-1. Allow for the user to configure number of mines and grid size via a configuration.
-2. (Difficult) Discovering an empty square should reveal all squares around it, and cascade into other nearby empty squares
+## Screenshot
 
-[
-[cell00, cell01, cell 02],
-[cell 1,0, cell11],
-[cell 2,0 ],
-[],
-[],
-[]
-]
+![Minesweeper Screenshot](./assets/minesweeper-screenshot.png)
 
-```bash
-[0,0][0,1 ] [0,2]
-[ 1,0][1,1] [1,2]
-[ 2,0][2,1] [2,2]
-```
+## Features
 
-```bash
-[ ][1][ ]
-[ ][ ][ ]
-[ ][ ][ ]
-```
+- Generates a 10x10 game board
+- Randomly places mines
+- Calculates surrounding mine numbers
+- Allows players to reveal cells using coordinates
+- Tracks revealed cells
+- Detects when a mine is selected or all empty cells are revealed
 
-```bash
-+---+---+
-| 2 |   |
-+---+---+
-```
+## Java Concepts
+
+- Object-oriented programming (Classes and Objects)
+- Encapsulation
+- ArrayLists and nested collections
+- Loops and conditional logic
+- User input with Scanner
+
+## Technologies
+
+- Java
+- Git & GitHub
